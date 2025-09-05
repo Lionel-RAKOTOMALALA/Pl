@@ -6,6 +6,7 @@ import { Card } from '@/components/ui/card'
 import { Separator } from '@/components/ui/separator'
 import type { SolutionMethod } from '@/app/page'
 import { solve3x3 } from '@/lib/utils';
+import { LineChartIcon, TargetIcon, CheckCircleIcon } from 'lucide-react'
 
 const Plot = dynamic(() => import('react-plotly.js'), { ssr: false }) as any
 
@@ -83,7 +84,7 @@ export function LPVisualization({ constraints, objectiveFunction, problemType, s
             opacity: 0.4,
             showscale: false,
             name: `${a}x₁ + ${b}x₂ + ${c}x₃ = ${d}`,
-            colorscale: [[0, ['#e74c3c', '#2980b9', '#8e44ad', '#f39c12', '#16a085', '#34495e'][i % 6]], [1, ['#e74c3c', '#2980b9', '#8e44ad', '#f39c12', '#16a085', '#34495e'][i % 6]]]
+            colorscale: [[0, ['#FF9A00', '#FFD93D', '#4F200D', '#F6F1E9', '#FF9A00', '#FFD93D'][i % 6]], [1, ['#FF9A00', '#FFD93D', '#4F200D', '#F6F1E9', '#FF9A00', '#FFD93D'][i % 6]]]
           },
           {
             type: 'scatter3d',
@@ -92,7 +93,7 @@ export function LPVisualization({ constraints, objectiveFunction, problemType, s
             y: [textPos[1]],
             z: [textPos[2]],
             text: [`${a}x₁ + ${b}x₂ + ${c}x₃ = ${d}`],
-            textfont: { color: ['#e74c3c', '#2980b9', '#8e44ad', '#f39c12', '#16a085', '#34495e'][i % 6], size: 14 },
+            textfont: { color: ['#FF9A00', '#FFD93D', '#4F200D', '#F6F1E9', '#FF9A00', '#FFD93D'][i % 6], size: 14 },
             showlegend: false,
             hoverinfo: 'skip'
           }
@@ -122,11 +123,11 @@ export function LPVisualization({ constraints, objectiveFunction, problemType, s
             // Vérifier x, y, z >= 0
             if (pt[0] < -1e-6 || pt[1] < -1e-6 || pt[2] < -1e-6) feasible = false;
             if (feasible) {
-              // Arrondir pour éviter les doublons numériques
-              const rounded = pt.map(x => Math.round(x * 1e8) / 1e8);
-              if (!vertices.some(v => v.every((x, idx) => Math.abs(x - rounded[idx]) < 1e-6))) {
-                vertices.push(rounded);
-              }
+                              // Arrondir pour éviter les doublons numériques
+                const rounded = pt.map(x => Math.round(x * 1e8) / 1e8);
+                if (!vertices.some(v => v.every((x, idx) => Math.abs(x - rounded[idx]) < 1e-6))) {
+                  vertices.push(rounded);
+                }
             }
           }
         }
@@ -138,7 +139,7 @@ export function LPVisualization({ constraints, objectiveFunction, problemType, s
         z: vertices.map(v => v[2]),
         mode: 'markers+text',
         type: 'scatter3d',
-        marker: { size: 5, color: 'black' },
+        marker: { size: 5, color: '#4F200D' },
         text: vertices.map(v => `(${v[0].toFixed(1)}, ${v[1].toFixed(1)}, ${v[2].toFixed(1)})`),
         textposition: 'top right',
         name: 'Sommets',
@@ -168,7 +169,7 @@ export function LPVisualization({ constraints, objectiveFunction, problemType, s
           z: vertices.map(v => v[2]),
           i: I, j: J, k: K,
           opacity: 0.15,
-          color: 'red',
+          color: '#FF9A00',
           name: 'Polyèdre réalisable',
           hoverinfo: 'skip',
           showlegend: true
@@ -183,9 +184,9 @@ export function LPVisualization({ constraints, objectiveFunction, problemType, s
           z: [solution.coordinates[2]],
           mode: 'markers+text',
           type: 'scatter3d',
-          marker: { size: 8, color: 'red' },
+          marker: { size: 8, color: '#4F200D' },
           text: ['S'],
-          textfont: { color: 'red', size: 24 },
+          textfont: { color: '#4F200D', size: 24 },
           name: 'Solution optimale',
           showlegend: true
         }
@@ -199,12 +200,12 @@ export function LPVisualization({ constraints, objectiveFunction, problemType, s
       setPlotLayout({
         title: 'Visualisation 3D (3 variables)',
         scene: {
-          xaxis: { title: 'x₁', range: xRange, backgroundcolor: '#f8f8ff', gridcolor: '#bbb', zerolinecolor: '#888' },
-          yaxis: { title: 'x₂', range: yRange, backgroundcolor: '#f8f8ff', gridcolor: '#bbb', zerolinecolor: '#888' },
-          zaxis: { title: 'x₃', range: zRange, backgroundcolor: '#f8f8ff', gridcolor: '#bbb', zerolinecolor: '#888' }
+          xaxis: { title: 'x₁', range: xRange, backgroundcolor: '#F6F1E9', gridcolor: '#FFD93D', zerolinecolor: '#4F200D' },
+          yaxis: { title: 'x₂', range: yRange, backgroundcolor: '#F6F1E9', gridcolor: '#FFD93D', zerolinecolor: '#4F200D' },
+          zaxis: { title: 'x₃', range: zRange, backgroundcolor: '#F6F1E9', gridcolor: '#FFD93D', zerolinecolor: '#4F200D' }
         },
         autosize: true,
-        legend: { x: 1, y: 1, xanchor: 'right', yanchor: 'top', traceorder: 'normal', font: { family: 'sans-serif', size: 10, color: '#000' }, bgcolor: 'rgba(255,255,255,0.7)', bordercolor: '#FFFFFF', borderwidth: 2 }
+        legend: { x: 1, y: 1, xanchor: 'right', yanchor: 'top', traceorder: 'normal', font: { family: 'sans-serif', size: 10, color: '#4F200D' }, bgcolor: 'rgba(246,241,233,0.9)', bordercolor: '#FF9A00', borderwidth: 2 }
       })
       return
     }
@@ -223,7 +224,7 @@ export function LPVisualization({ constraints, objectiveFunction, problemType, s
           textposition: 'top right',
           marker: {
             size: 12,
-            color: 'rgb(255, 0, 0)'
+            color: '#4F200D'
           }
         };
       }
@@ -238,7 +239,7 @@ export function LPVisualization({ constraints, objectiveFunction, problemType, s
             text: "Visualisation complète impossible (>3 variables). Seul le point optimal projeté (x₁, x₂) est affiché.",
             xref: "paper", yref: "paper",
             x: 0.5, y: 1.05, showarrow: false,
-            font: { size: 14, color: "red" }
+            font: { size: 14, color: "#FF9A00" }
           }
         ]
       });
@@ -270,7 +271,7 @@ export function LPVisualization({ constraints, objectiveFunction, problemType, s
         }
       });
     }
-    const constraintColors = ['#e74c3c', '#27ae60', '#8e44ad', '#f39c12', '#16a085', '#34495e'];
+    const constraintColors = ['#FF9A00', '#FFD93D', '#4F200D', '#F6F1E9', '#FF9A00', '#FFD93D'];
     const constraintLines = constraints.coefficients.map((coeffs, i) => {
       const a = coeffs[0]
       const b = coeffs[1]
@@ -317,8 +318,8 @@ export function LPVisualization({ constraints, objectiveFunction, problemType, s
         mode: 'lines',
         name: `${coeffs[0]}x₁ + ${coeffs[1]}x₂ ${constraints.signs[i]} ${constraints.values[i]}`,
         line: {
-          color: isActive ? ['#FF5733', '#33FF57', '#3357FF', '#FFBD33', '#33FFBD'][i % 5] : 'gray',
-          width: 2,
+          color: isActive ? ['#FF9A00', '#FFD93D', '#4F200D', '#F6F1E9', '#FF9A00'][i % 5] : '#FFD93D',
+          width: 3,
           dash: isActive ? 'solid' : 'dashdot'
         }
       }
@@ -329,7 +330,7 @@ export function LPVisualization({ constraints, objectiveFunction, problemType, s
       y: [0, 0],
       mode: 'lines',
       name: 'x₂ = 0',
-      line: { color: 'gray', width: 2 }
+      line: { color: '#4F200D', width: 2 }
     }
     
     const yAxisLine = {
@@ -337,7 +338,7 @@ export function LPVisualization({ constraints, objectiveFunction, problemType, s
       y: [0, yRange[1]],
       mode: 'lines',
       name: 'x₁ = 0',
-      line: { color: 'gray', width: 2 }
+      line: { color: '#4F200D', width: 2 }
     }
     
     let solutionPoint = null
@@ -352,7 +353,7 @@ export function LPVisualization({ constraints, objectiveFunction, problemType, s
         textposition: 'top right',
         marker: {
           size: 10,
-          color: 'rgb(255, 0, 0)'
+          color: '#4F200D'
         }
       } as any
     }
@@ -366,8 +367,8 @@ export function LPVisualization({ constraints, objectiveFunction, problemType, s
       mode: 'lines',
       name: `Z = ${objectiveFunction[0]}x₁ + ${objectiveFunction[1]}x₂`,
       line: {
-        color: 'rgb(0, 0, 0)',
-        width: 2,
+        color: '#4F200D',
+        width: 3,
         dash: 'dash'
       }
     }
@@ -422,7 +423,7 @@ export function LPVisualization({ constraints, objectiveFunction, problemType, s
     // Ajout des hachures croisées et colorées pour chaque contrainte
     let hatchTraces: any[] = [];
     const hatchAngles = [Math.PI/4, -Math.PI/4, 0, Math.PI/2, Math.PI/3, -Math.PI/3];
-    const hatchColors = ['#e74c3c', '#27ae60', '#8e44ad', '#f39c12', '#16a085', '#34495e'];
+    const hatchColors = ['#FF9A00', '#FFD93D', '#4F200D', '#F6F1E9', '#FF9A00', '#FFD93D'];
     constraints.coefficients.forEach((coeffs, i) => {
       const a = coeffs[0];
       const b = coeffs[1];
@@ -456,14 +457,14 @@ export function LPVisualization({ constraints, objectiveFunction, problemType, s
         mode: 'markers+text',
         type: 'scatter',
         marker: {
-          color: 'red',
+          color: '#4F200D',
           size: 22, // plus gros
           symbol: 'circle',
-          line: { color: 'black', width: 2 }
+          line: { color: '#FF9A00', width: 3 }
         },
         text: ['S'],
         textfont: {
-          color: 'red',
+          color: '#4F200D',
           size: 36, // plus gros
           family: 'Arial Black, Arial, sans-serif',
         },
@@ -486,8 +487,8 @@ export function LPVisualization({ constraints, objectiveFunction, problemType, s
         y: yPoly,
         mode: 'lines',
         fill: 'toself',
-        fillcolor: 'rgba(255,0,0,0.35)',
-        line: { color: 'red', width: 3 },
+        fillcolor: 'rgba(255,154,0,0.35)',
+        line: { color: '#FF9A00', width: 3 },
         name: 'Zone Solution',
         showlegend: false,
         hoverinfo: 'skip'
@@ -512,8 +513,8 @@ export function LPVisualization({ constraints, objectiveFunction, problemType, s
         y: sorted.map(p => p[1]),
         mode: 'lines+markers+text',
         type: 'scatter',
-        marker: { color: 'red', size: 4 },
-        line: { color: 'red', width: 3 },
+        marker: { color: '#4F200D', size: 4 },
+        line: { color: '#4F200D', width: 3 },
         text: sorted.map(([x, y]) => `(${x},${y})`),
         textposition: 'top right',
         name: `Droite tableau`
@@ -531,8 +532,8 @@ export function LPVisualization({ constraints, objectiveFunction, problemType, s
             y: [row.points[j][1], row.points[k][1]],
             mode: 'lines+markers',
             type: 'scatter',
-            marker: { color: 'orange', size: 6 },
-            line: { color: 'orange', width: 2, dash: 'dot' },
+            marker: { color: '#FFD93D', size: 6 },
+            line: { color: '#FFD93D', width: 2, dash: 'dot' },
             name: `Segment (${row.points[j][0]},${row.points[j][1]})-(${row.points[k][0]},${row.points[k][1]})`
           });
         }
@@ -554,7 +555,7 @@ export function LPVisualization({ constraints, objectiveFunction, problemType, s
         x: xLine,
         y: yLine,
         mode: 'lines',
-        line: { color: 'black', width: 3, dash: 'dash' },
+        line: { color: '#4F200D', width: 3, dash: 'dash' },
         name: 'Droite de la fonction objectif passant par S'
       };
     }
@@ -577,13 +578,23 @@ export function LPVisualization({ constraints, objectiveFunction, problemType, s
       title: 'Visualisation Graphique de la Solution',
       xaxis: {
         title: 'x₁',
-        range: [0, Math.min(20, Math.max(...constraintLines.flatMap(line => line.x)) * 1.2)]
+        range: [0, Math.min(20, Math.max(...constraintLines.flatMap(line => line.x)) * 1.2)],
+        gridcolor: '#FFD93D',
+        zerolinecolor: '#4F200D',
+        titlefont: { color: '#4F200D', size: 14 },
+        tickfont: { color: '#4F200D', size: 12 }
       },
       yaxis: {
         title: 'x₂',
-        range: [0, Math.min(20, Math.max(...constraintLines.flatMap(line => line.y)) * 1.2)]
+        range: [0, Math.min(20, Math.max(...constraintLines.flatMap(line => line.y)) * 1.2)],
+        gridcolor: '#FFD93D',
+        zerolinecolor: '#4F200D',
+        titlefont: { color: '#4F200D', size: 14 },
+        tickfont: { color: '#4F200D', size: 12 }
       },
       autosize: true,
+      plot_bgcolor: '#F6F1E9',
+      paper_bgcolor: '#F6F1E9',
       legend: {
         x: 1,
         y: 1,
@@ -593,10 +604,10 @@ export function LPVisualization({ constraints, objectiveFunction, problemType, s
         font: {
           family: 'sans-serif',
           size: 10,
-          color: '#000'
+          color: '#4F200D'
         },
-        bgcolor: 'rgba(255,255,255,0.7)',
-        bordercolor: '#FFFFFF',
+        bgcolor: 'rgba(246,241,233,0.9)',
+        bordercolor: '#FF9A00',
         borderwidth: 2
       }
     }
@@ -609,19 +620,26 @@ export function LPVisualization({ constraints, objectiveFunction, problemType, s
   const isSolutionValid = solution.isValid && solution.coordinates.every(x => typeof x === 'number' && !isNaN(x) && isFinite(x));
 
   return (
-    <Card className="modern-card p-6">
-      <div className="flex items-center space-x-3 mb-4">
-        <div className="w-3 h-3 bg-gradient-to-r from-blue-400 to-cyan-300 rounded-full"></div>
-        <h2 className="text-2xl font-bold gradient-text">
+    <Card className="modern-card p-8 border-2 border-[#4F200D]/20">
+      <div className="flex items-center space-x-4 mb-6">
+        <div className="p-3 rounded-full bg-gradient-to-r from-[#FFD93D] to-[#FF9A00] shadow-lg">
+          <LineChartIcon className="h-8 w-8 text-[#4F200D]" />
+        </div>
+        <h2 className="text-3xl font-bold text-[#4F200D]">
           Visualisation - {method === 'graphical' ? 'Méthode Graphique' : 
                           method === 'simplex' ? 'Simplexe' : 'Forme Générale'}
         </h2>
       </div>
-      <Separator className="my-4" />
+      <Separator className="separator h-1 mb-6" />
 
       {!isSolutionValid ? (
         <div className="w-full h-[300px] flex items-center justify-center">
-          <div className="text-red-500 text-lg font-semibold">Aucune solution réalisable trouvée pour ce problème.</div>
+          <div className="text-center space-y-4">
+            <div className="w-16 h-16 mx-auto rounded-full bg-gradient-to-r from-red-400 to-red-600 flex items-center justify-center">
+              <span className="text-2xl">⚠️</span>
+            </div>
+            <div className="text-red-800 text-lg font-semibold">Aucune solution réalisable trouvée pour ce problème.</div>
+          </div>
         </div>
       ) : (
         <>
@@ -652,16 +670,21 @@ export function LPVisualization({ constraints, objectiveFunction, problemType, s
           )}
 
           {solution.isValid && (
-            <div className="mt-6 p-4 glass-effect rounded-xl border border-green-500/20">
-              <h3 className="text-lg font-semibold mb-3 text-green-400">📊 Résumé de la Solution</h3>
-              <div className="grid md:grid-cols-2 gap-4">
-                <div>
-                  <p className="text-sm text-blue-200/70 mb-1">Valeur Optimale :</p>
-                  <p className="text-xl font-bold text-green-400">Z = {solution.value.toFixed(3)}</p>
+            <div className="mt-8 p-6 success-card rounded-2xl border-2 border-[#4F200D]/30">
+              <div className="flex items-center space-x-3 mb-4">
+                <div className="p-2 rounded-full bg-gradient-to-r from-[#FFD93D] to-[#FF9A00]">
+                  <CheckCircleIcon className="h-6 w-6 text-[#4F200D]" />
                 </div>
-                <div>
-                  <p className="text-sm text-blue-200/70 mb-1">Point Optimal :</p>
-                  <p className="text-lg font-mono text-white">(
+                <h3 className="text-xl font-bold text-[#4F200D]">📊 Résumé de la Solution</h3>
+              </div>
+              <div className="grid md:grid-cols-2 gap-6">
+                <div className="p-4 bg-white/30 rounded-xl border-2 border-[#FF9A00]/30">
+                  <p className="text-sm text-[#4F200D]/70 font-semibold uppercase tracking-wide mb-2">Valeur Optimale :</p>
+                  <p className="text-2xl font-bold text-[#4F200D]">Z = {solution.value.toFixed(3)}</p>
+                </div>
+                <div className="p-4 bg-gradient-to-r from-[#FFD93D]/30 to-[#FF9A00]/30 rounded-xl border-2 border-[#4F200D]/30">
+                  <p className="text-sm text-[#4F200D]/70 font-semibold uppercase tracking-wide mb-2">Point Optimal :</p>
+                  <p className="text-lg font-mono text-[#4F200D] font-bold">(
                 {solution.coordinates.map((coord, i) => (
                   <span key={i}>
                     x<sub>{i+1}</sub> = {coord.toFixed(2)}

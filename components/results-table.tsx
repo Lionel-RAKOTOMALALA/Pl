@@ -310,8 +310,8 @@ export function ResultsTable({ tableData, method, iterations, canonicalForm }: T
     return (
       <Card className="modern-card p-6">
         <div className="flex items-center space-x-3 mb-4">
-          <div className="w-3 h-3 bg-gradient-to-r from-blue-400 to-cyan-300 rounded-full"></div>
-          <h2 className="text-2xl font-bold gradient-text">
+          <div className="w-3 h-3 rounded-full bg-[#FF9A00]"></div>
+          <h2 className="text-2xl font-bold text-[#4F200D]">
             Résolution graphique - Tableau des Points
           </h2>
         </div>
@@ -319,41 +319,41 @@ export function ResultsTable({ tableData, method, iterations, canonicalForm }: T
         <div className="overflow-x-auto">
           <Table>
             <TableHeader>
-              <TableRow className="border-b-2 border-blue-500/30">
-                <TableHead className="text-center font-bold text-blue-300 bg-blue-900/20 border-r border-blue-500/30">
+              <TableRow className="border-b-2 border-[#4F200D]/20">
+                <TableHead className="text-center font-extrabold text-[#4F200D] bg-white/60 border-r border-[#4F200D]/20">
                   Contraintes
                 </TableHead>
-                <TableHead className="text-center font-bold text-blue-300 bg-blue-900/20 border-r border-blue-500/30">
+                <TableHead className="text-center font-extrabold text-[#4F200D] bg-white/60 border-r border-[#4F200D]/20">
                   Équations des droites
                 </TableHead>
-                <TableHead className="text-center font-bold text-blue-300 bg-blue-900/20 border-r border-blue-500/30">
+                <TableHead className="text-center font-extrabold text-[#4F200D] bg-white/60 border-r border-[#4F200D]/20">
                   Point 1
                 </TableHead>
-                <TableHead className="text-center font-bold text-blue-300 bg-blue-900/20 border-r border-blue-500/30">
+                <TableHead className="text-center font-extrabold text-[#4F200D] bg-white/60 border-r border-[#4F200D]/20">
                   Point 2
                 </TableHead>
-                <TableHead className="text-center font-bold text-blue-300 bg-blue-900/20">
+                <TableHead className="text-center font-extrabold text-[#4F200D] bg-white/60">
                   Point 3
                 </TableHead>
               </TableRow>
             </TableHeader>
             <TableBody>
               {rows.map((row, rowIndex) => (
-                <TableRow key={rowIndex} className="hover:bg-blue-500/10 border-b border-blue-500/20">
-                  <TableCell className="text-center text-white font-mono bg-blue-900/10 border-r border-blue-500/20 font-medium">
+                <TableRow key={rowIndex} className="hover:bg-[#FFD93D]/20 border-b border-[#4F200D]/15">
+                  <TableCell className="text-center text-[#4F200D] font-mono bg-white/40 border-r border-[#4F200D]/15 font-semibold">
                     {row[0]}
                   </TableCell>
-                  <TableCell className="text-center text-cyan-300 font-mono bg-blue-900/10 border-r border-blue-500/20">
+                  <TableCell className="text-center text-[#4F200D] font-mono bg-white/40 border-r border-[#4F200D]/15">
                     {row[1]}
                   </TableCell>
-                  <TableCell className="text-center text-green-300 font-mono bg-blue-900/10 border-r border-blue-500/20">
+                  <TableCell className="text-center text-[#4F200D] font-mono bg-white/40 border-r border-[#4F200D]/15">
                     {row[2]}
                   </TableCell>
-                  <TableCell className="text-center text-green-300 font-mono bg-blue-900/10 border-r border-blue-500/20">
-                    {row[3] || '-'}
+                  <TableCell className="text-center text-[#4F200D] font-mono bg-white/40 border-r border-[#4F200D]/15">
+                    {row[3] || <span className="text-[#4F200D]/50">-</span>}
                   </TableCell>
-                  <TableCell className="text-center text-green-300 font-mono bg-blue-900/10">
-                    {row[4] || '-'}
+                  <TableCell className="text-center text-[#4F200D] font-mono bg-white/40">
+                    {row[4] || <span className="text-[#4F200D]/50">-</span>}
                   </TableCell>
                 </TableRow>
               ))}
@@ -361,9 +361,9 @@ export function ResultsTable({ tableData, method, iterations, canonicalForm }: T
           </Table>
         </div>
         
-        <div className="mt-4 p-4 glass-effect rounded-xl border border-blue-500/20">
-          <h3 className="text-lg font-semibold mb-2 text-blue-300">📝 Explication</h3>
-          <p className="text-sm text-blue-200/80">
+        <div className="mt-4 p-4 rounded-xl border-2 border-[#FF9A00]/30 bg-white/50">
+          <h3 className="text-lg font-bold mb-2 text-[#4F200D]">📝 Explication</h3>
+          <p className="text-sm text-[#4F200D]/80">
             Ce tableau présente les contraintes du problème, leurs équations de droites correspondantes, 
             et les points d'intersection calculés pour déterminer la région réalisable.
           </p>

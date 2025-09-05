@@ -3,45 +3,45 @@
 @tailwind utilities;
 
 :root {
-  --foreground-rgb: 255, 255, 255;
-  --background-start-rgb: 15, 23, 42;
-  --background-end-rgb: 30, 41, 59;
+  --foreground-rgb: 79, 32, 13;
+  --background-start-rgb: 246, 241, 233;
+  --background-end-rgb: 255, 217, 61;
 }
 
 @media (prefers-color-scheme: dark) {
   :root {
-    --foreground-rgb: 255, 255, 255;
-    --background-start-rgb: 15, 23, 42;
-    --background-end-rgb: 30, 41, 59;
+    --foreground-rgb: 246, 241, 233;
+    --background-start-rgb: 79, 32, 13;
+    --background-end-rgb: 255, 154, 0;
   }
 }
 
 @layer base {
   :root {
-    --background: 222.2 84% 4.9%;
-    --foreground: 210 40% 98%;
-    --card: 222.2 84% 4.9%;
-    --card-foreground: 210 40% 98%;
-    --popover: 222.2 84% 4.9%;
-    --popover-foreground: 210 40% 98%;
-    --primary: 217.2 91.2% 59.8%;
-    --primary-foreground: 222.2 84% 4.9%;
-    --secondary: 217.2 32.6% 17.5%;
-    --secondary-foreground: 210 40% 98%;
-    --muted: 217.2 32.6% 17.5%;
-    --muted-foreground: 215 20.2% 65.1%;
-    --accent: 217.2 32.6% 17.5%;
-    --accent-foreground: 210 40% 98%;
+    --background: 45 33% 94%;
+    --foreground: 25 72% 18%;
+    --card: 45 33% 94%;
+    --card-foreground: 25 72% 18%;
+    --popover: 45 33% 94%;
+    --popover-foreground: 25 72% 18%;
+    --primary: 45 100% 62%;
+    --primary-foreground: 25 72% 18%;
+    --secondary: 35 100% 50%;
+    --secondary-foreground: 25 72% 18%;
+    --muted: 45 33% 90%;
+    --muted-foreground: 25 72% 30%;
+    --accent: 35 100% 50%;
+    --accent-foreground: 25 72% 18%;
     --destructive: 0 62.8% 30.6%;
-    --destructive-foreground: 210 40% 98%;
-    --border: 217.2 32.6% 17.5%;
-    --input: 217.2 32.6% 17.5%;
-    --ring: 224.3 76.3% 94.1%;
-    --chart-1: 220 70% 50%;
-    --chart-2: 160 60% 45%;
-    --chart-3: 30 80% 55%;
-    --chart-4: 280 65% 60%;
-    --chart-5: 340 75% 55%;
+    --destructive-foreground: 45 33% 94%;
+    --border: 35 100% 50%;
+    --input: 45 33% 90%;
+    --ring: 45 100% 62%;
+    --chart-1: 45 100% 62%;
+    --chart-2: 35 100% 50%;
+    --chart-3: 25 72% 18%;
+    --chart-4: 45 33% 94%;
+    --chart-5: 35 100% 50%;
     --radius: 0.75rem;
   }
 }
@@ -51,35 +51,81 @@
     @apply border-border;
   }
   body {
-    @apply bg-gradient-to-br from-slate-900 via-blue-900 to-slate-800 text-foreground min-h-screen;
+    @apply bg-gradient-to-br from-[#F6F1E9] via-[#FFD93D] to-[#FF9A00] text-foreground min-h-screen;
     font-family: 'Inter', -apple-system, BlinkMacSystemFont, sans-serif;
   }
 }
 
 .glass-effect {
-  @apply bg-white/5 backdrop-blur-xl border border-white/10;
+  @apply bg-white/20 backdrop-blur-xl border border-[#FF9A00]/30 shadow-lg;
 }
 
 .gradient-text {
-  @apply bg-gradient-to-r from-blue-400 to-cyan-300 bg-clip-text text-transparent;
+  @apply bg-gradient-to-r from-[#4F200D] to-[#FF9A00] bg-clip-text text-transparent;
 }
 
 .modern-card {
-  @apply glass-effect rounded-2xl shadow-2xl shadow-blue-500/10;
+  @apply glass-effect rounded-2xl shadow-2xl shadow-[#FF9A00]/20;
 }
 
 .modern-button {
-  @apply bg-gradient-to-r from-blue-600 to-blue-500 hover:from-blue-700 hover:to-blue-600 
-         text-white font-semibold py-3 px-6 rounded-xl shadow-lg shadow-blue-500/25 
-         transition-all duration-300 hover:shadow-xl hover:shadow-blue-500/40 
-         hover:scale-105 active:scale-95;
+  @apply bg-gradient-to-r from-[#FFD93D] to-[#FF9A00] hover:from-[#FF9A00] hover:to-[#4F200D] 
+         text-[#4F200D] font-bold py-3 px-6 rounded-xl shadow-lg shadow-[#FF9A00]/30 
+         transition-all duration-300 hover:shadow-xl hover:shadow-[#FF9A00]/40 
+         hover:scale-105 active:scale-95 border-2 border-[#4F200D]/20;
 }
 
 .method-card {
-  @apply glass-effect rounded-xl p-6 border border-blue-500/20 hover:border-blue-400/40 
-         transition-all duration-300 hover:shadow-lg hover:shadow-blue-500/20 cursor-pointer;
+  @apply glass-effect rounded-xl p-6 border-2 border-[#FF9A00]/30 hover:border-[#FFD93D]/60 
+         transition-all duration-300 hover:shadow-lg hover:shadow-[#FF9A00]/30 cursor-pointer
+         bg-gradient-to-br from-white/30 to-[#F6F1E9]/50;
 }
 
 .method-card.selected {
-  @apply border-blue-400/60 bg-blue-500/10 shadow-lg shadow-blue-500/30;
+  @apply border-[#4F200D]/60 bg-gradient-to-br from-[#FFD93D]/30 to-[#FF9A00]/20 
+         shadow-lg shadow-[#4F200D]/30;
+}
+
+.form-input {
+  @apply bg-white/40 border-2 border-[#FF9A00]/50 text-[#4F200D] placeholder-[#4F200D]/60
+         focus:border-[#4F200D] focus:ring-2 focus:ring-[#FFD93D]/50 rounded-lg
+         transition-all duration-200;
+}
+
+.form-label {
+  @apply text-[#4F200D] font-semibold text-lg;
+}
+
+.form-select {
+  @apply bg-white/40 border-2 border-[#FF9A00]/50 text-[#4F200D] 
+         focus:border-[#4F200D] focus:ring-2 focus:ring-[#FFD93D]/50 rounded-lg
+         transition-all duration-200;
+}
+
+.radio-item {
+  @apply border-2 border-[#FF9A00] text-[#FF9A00] hover:bg-[#FFD93D]/20
+         data-[state=checked]:bg-[#FFD93D] data-[state=checked]:border-[#4F200D]
+         data-[state=checked]:text-[#4F200D];
+}
+
+.tabs-trigger {
+  @apply bg-white/20 border-2 border-[#FF9A00]/30 text-[#4F200D] font-semibold
+         data-[state=active]:bg-gradient-to-r data-[state=active]:from-[#FFD93D] data-[state=active]:to-[#FF9A00]
+         data-[state=active]:text-[#4F200D] data-[state=active]:border-[#4F200D];
+}
+
+.separator {
+  @apply bg-gradient-to-r from-transparent via-[#FF9A00] to-transparent;
+}
+
+.success-card {
+  @apply glass-effect border-2 border-[#4F200D]/40 bg-gradient-to-br from-[#F6F1E9]/80 to-[#FFD93D]/30;
+}
+
+.error-card {
+  @apply glass-effect border-2 border-red-500/40 bg-gradient-to-br from-red-100/80 to-red-200/30;
+}
+
+.warning-card {
+  @apply glass-effect border-2 border-[#FF9A00]/40 bg-gradient-to-br from-[#FFD93D]/80 to-[#FF9A00]/30;
 }

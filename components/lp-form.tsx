@@ -9,7 +9,7 @@ import { Input } from '@/components/ui/input'
 import { Label } from '@/components/ui/label'
 import { RadioGroup, RadioGroupItem } from '@/components/ui/radio-group'
 import { Separator } from '@/components/ui/separator'
-import { PlusCircle, MinusCircle, ChevronRightCircle } from 'lucide-react'
+import { PlusCircle, MinusCircle, ChevronRightCircle, TargetIcon, ZapIcon, SettingsIcon } from 'lucide-react'
 import type { SolutionMethod } from '@/app/page'
 import {
   Form,
@@ -143,10 +143,15 @@ export function LPForm({ onSolve, selectedMethod }: LPFormProps) {
   }
 
   return (
-    <div className="space-y-6">
-      <div className="text-center space-y-2">
-        <h2 className="text-2xl font-bold gradient-text">Configuration du Problème</h2>
-        <p className="text-blue-200/70">
+    <div className="space-y-8">
+      <div className="text-center space-y-4">
+        <div className="flex justify-center mb-4">
+          <div className="p-3 rounded-full bg-gradient-to-r from-[#FFD93D] to-[#FF9A00] shadow-lg">
+            <SettingsIcon className="h-8 w-8 text-[#4F200D]" />
+          </div>
+        </div>
+        <h2 className="text-3xl font-bold text-[#4F200D]">Configuration du Problème</h2>
+        <p className="text-[#4F200D]/80 text-lg font-medium">
           {selectedMethod === 'graphical' && 'Méthode graphique - Limité à 2 variables'}
           {selectedMethod === 'simplex' && 'Algorithme du simplexe - Tableau détaillé'}
           {selectedMethod === 'general' && 'Forme générale - Approche matricielle'}
@@ -154,71 +159,79 @@ export function LPForm({ onSolve, selectedMethod }: LPFormProps) {
       </div>
       
       <Form {...form}>
-        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-6">
+        <form onSubmit={form.handleSubmit(onSubmit)} className="space-y-8">
           <FormField
             control={form.control}
             name="problemType"
             render={({ field }) => (
-              <FormItem className="space-y-3">
-                <FormLabel className="text-lg font-semibold text-blue-300">Type de Problème</FormLabel>
+              <FormItem className="space-y-4">
+                <FormLabel className="form-label flex items-center space-x-3">
+                  <TargetIcon className="h-5 w-5 text-[#FF9A00]" />
+                  <span>Type de Problème</span>
+                </FormLabel>
                 <RadioGroup
                   onValueChange={field.onChange}
                   defaultValue={field.value}
-                  className="flex space-x-6"
+                  className="flex space-x-8"
                 >
                   <FormItem className="flex items-center space-x-3 space-y-0">
                     <FormControl>
-                      <RadioGroupItem value="max" className="border-blue-400 text-blue-400" />
+                      <RadioGroupItem value="max" className="radio-item" />
                     </FormControl>
-                    <FormLabel className="font-medium text-white cursor-pointer">Maximiser</FormLabel>
+                    <FormLabel className="font-bold text-[#4F200D] cursor-pointer text-lg">Maximiser</FormLabel>
                   </FormItem>
                   <FormItem className="flex items-center space-x-3 space-y-0">
                     <FormControl>
-                      <RadioGroupItem value="min" className="border-blue-400 text-blue-400" />
+                      <RadioGroupItem value="min" className="radio-item" />
                     </FormControl>
-                    <FormLabel className="font-medium text-white cursor-pointer">Minimiser</FormLabel>
+                    <FormLabel className="font-bold text-[#4F200D] cursor-pointer text-lg">Minimiser</FormLabel>
                   </FormItem>
                 </RadioGroup>
               </FormItem>
             )}
           />
 
-          <div className="space-y-4 glass-effect rounded-xl p-6">
+          <div className="space-y-6 glass-effect rounded-2xl p-8 border-2 border-[#4F200D]/20">
             <div className="flex items-center justify-between">
-              <h3 className="text-lg font-semibold text-blue-300">Fonction Objectif</h3>
+              <div className="flex items-center space-x-3">
+                <div className="p-2 rounded-lg bg-gradient-to-r from-[#FFD93D] to-[#FF9A00]">
+                  <ZapIcon className="h-5 w-5 text-[#4F200D]" />
+                </div>
+                <h3 className="text-xl font-bold text-[#4F200D]">Fonction Objectif</h3>
+              </div>
               {selectedMethod !== 'graphical' && (
-                <div className="flex space-x-2">
+                <div className="flex space-x-3">
                 <Button 
                   type="button" 
                   size="sm" 
                   variant="outline"
-                  className="border-blue-500/50 text-blue-300 hover:bg-blue-500/20"
+                  className="border-2 border-[#FF9A00] text-[#4F200D] hover:bg-[#FFD93D]/20 font-semibold"
                   onClick={removeVariable}
                   disabled={numVariables <= 2}
                 >
-                  <MinusCircle className="h-4 w-4 mr-1" />
+                  <MinusCircle className="h-4 w-4 mr-2" />
                   Variable
                 </Button>
                 <Button 
                   type="button" 
                   size="sm" 
                   variant="outline"
-                  className="border-blue-500/50 text-blue-300 hover:bg-blue-500/20"
+                  className="border-2 border-[#FF9A00] text-[#4F200D] hover:bg-[#FFD93D]/20 font-semibold"
                   onClick={addVariable}
                   disabled={numVariables >= 5}
                 >
-                  <PlusCircle className="h-4 w-4 mr-1" />
+                  <PlusCircle className="h-4 w-4 mr-2" />
                   Variable
                 </Button>
               </div>
               )}
             </div>
 
-            <div className="flex items-center space-x-3">
-              <span className="text-lg font-semibold text-blue-300">Z = </span>
-              <div className="flex flex-wrap gap-2">
+            <div className="flex items-center space-x-4 p-6 bg-white/30 rounded-xl border-2 border-[#FF9A00]/30">
+              <span className="text-2xl font-bold text-[#4F200D]">Z = </span>
+              <div className="flex flex-wrap gap-4">
                 {Array.from({ length: numVariables }).map((_, index) => (
-                  <div key={`obj-${index}`} className="flex items-center">
+                  <div key={`obj-${index}`} className="flex items-center space-x-2">
                     <select
                       value={objectiveSigns[index]}
                       onChange={e => {
@@ -226,13 +239,13 @@ export function LPForm({ onSolve, selectedMethod }: LPFormProps) {
                         newSigns[index] = e.target.value;
                         setObjectiveSigns(newSigns);
                       }}
-                      className="border border-blue-500/50 bg-blue-900/50 text-white rounded px-2 py-1 mr-2"
+                      className="form-select w-16 text-center font-bold"
                     >
                       <option value="+">+</option>
                       <option value="-">-</option>
                     </select>
                     <Input
-                      className="w-16 text-center bg-blue-900/50 border-blue-500/50 text-white"
+                      className="form-input w-20 text-center font-bold"
                       type="number"
                       min={0}
                       {...form.register(`objectiveFunction.${index}`, { 
@@ -245,49 +258,54 @@ export function LPForm({ onSolve, selectedMethod }: LPFormProps) {
                         }
                       })}
                     />
-                    <span className="ml-1 mr-2 text-blue-300">x<sub>{index + 1}</sub></span>
+                    <span className="text-xl font-bold text-[#4F200D]">x<sub>{index + 1}</sub></span>
                   </div>
                 ))}
               </div>
             </div>
           </div>
 
-          <Separator />
+          <Separator className="separator h-1" />
 
-          <div className="space-y-4 glass-effect rounded-xl p-3 md:p-6">
+          <div className="space-y-6 glass-effect rounded-2xl p-8 border-2 border-[#4F200D]/20">
             <div className="flex items-center justify-between">
-              <h3 className="text-lg font-semibold text-blue-300">Contraintes</h3>
-              <div className="flex space-x-2">
+              <div className="flex items-center space-x-3">
+                <div className="p-2 rounded-lg bg-gradient-to-r from-[#FFD93D] to-[#FF9A00]">
+                  <TargetIcon className="h-5 w-5 text-[#4F200D]" />
+                </div>
+                <h3 className="text-xl font-bold text-[#4F200D]">Contraintes</h3>
+              </div>
+              <div className="flex space-x-3">
                 <Button 
                   type="button" 
                   size="sm" 
                   variant="outline"
-                  className="border-blue-500/50 text-blue-300 hover:bg-blue-500/20"
+                  className="border-2 border-[#FF9A00] text-[#4F200D] hover:bg-[#FFD93D]/20 font-semibold"
                   onClick={removeConstraint}
                   disabled={numConstraints <= 2}
                 >
-                  <MinusCircle className="h-4 w-4 mr-1" />
+                  <MinusCircle className="h-4 w-4 mr-2" />
                   Contrainte
                 </Button>
                 <Button 
                   type="button" 
                   size="sm" 
                   variant="outline"
-                  className="border-blue-500/50 text-blue-300 hover:bg-blue-500/20"
+                  className="border-2 border-[#FF9A00] text-[#4F200D] hover:bg-[#FFD93D]/20 font-semibold"
                   onClick={addConstraint}
                   disabled={numConstraints >= 5}
                 >
-                  <PlusCircle className="h-4 w-4 mr-1" />
+                  <PlusCircle className="h-4 w-4 mr-2" />
                   Contrainte
                 </Button>
               </div>
             </div>
 
-            <div className="space-y-3">
+            <div className="space-y-4">
               {Array.from({ length: numConstraints }).map((_, constraintIndex) => (
-                <div key={`constraint-${constraintIndex}`} className="flex flex-wrap gap-2 md:flex-row flex-col md:items-center">
+                <div key={`constraint-${constraintIndex}`} className="flex flex-wrap gap-3 md:flex-row flex-col md:items-center p-4 bg-white/20 rounded-xl border-2 border-[#FF9A00]/20">
                   {Array.from({ length: numVariables }).map((_, varIndex) => (
-                    <div key={`constraint-${constraintIndex}-var-${varIndex}`} className="flex items-center">
+                    <div key={`constraint-${constraintIndex}-var-${varIndex}`} className="flex items-center space-x-2">
                       <select
                         value={constraintSigns[constraintIndex][varIndex]}
                         onChange={e => {
@@ -295,13 +313,13 @@ export function LPForm({ onSolve, selectedMethod }: LPFormProps) {
                           newSigns[constraintIndex][varIndex] = e.target.value;
                           setConstraintSigns(newSigns);
                         }}
-                        className="border border-blue-500/50 bg-blue-900/50 text-white rounded px-2 py-1 mr-2"
+                        className="form-select w-16 text-center font-bold"
                       >
                         <option value="+">+</option>
                         <option value="-">-</option>
                       </select>
                       <Input
-                        className="w-14 md:w-16 text-center bg-blue-900/50 border-blue-500/50 text-white"
+                        className="form-input w-16 text-center font-bold"
                         type="number"
                         min={0}
                         {...form.register(`constraintCoefficients.${constraintIndex}.${varIndex}`, { 
@@ -314,12 +332,12 @@ export function LPForm({ onSolve, selectedMethod }: LPFormProps) {
                           }
                         })}
                       />
-                      <span className="ml-1 mr-2 text-blue-300">x<sub>{varIndex + 1}</sub></span>
+                      <span className="text-lg font-bold text-[#4F200D]">x<sub>{varIndex + 1}</sub></span>
                     </div>
                   ))}
                   
                   <select
-                    className="w-16 h-10 rounded-md border border-blue-500/50 bg-blue-900/50 text-white px-3"
+                    className="form-select w-20 text-center font-bold"
                     {...form.register(`constraintSigns.${constraintIndex}`, {
                       onChange: (e) => {
                         const current = [...form.getValues().constraintSigns]
@@ -336,7 +354,7 @@ export function LPForm({ onSolve, selectedMethod }: LPFormProps) {
                   </select>
                   
                   <Input
-                    className="w-14 md:w-16 text-center bg-blue-900/50 border-blue-500/50 text-white"
+                    className="form-input w-20 text-center font-bold"
                     type="number"
                     min={0}
                     {...form.register(`constraintValues.${constraintIndex}`, { 
@@ -354,17 +372,17 @@ export function LPForm({ onSolve, selectedMethod }: LPFormProps) {
             </div>
           </div>
 
-          <Separator />
+          <Separator className="separator h-1" />
 
-          <div className="flex items-center justify-between">
+          <div className="flex items-center justify-between p-6 bg-gradient-to-r from-[#FFD93D]/20 to-[#FF9A00]/20 rounded-xl border-2 border-[#4F200D]/20">
             <FormDescription>
-              <span className="text-blue-200/70">
+              <span className="text-[#4F200D]/80 font-medium text-lg">
                 Configurez votre problème et cliquez sur Résoudre pour obtenir la solution optimale.
               </span>
             </FormDescription>
             <Button type="submit" size="lg" className="modern-button gap-3">
               <span>Résoudre</span>
-              <ChevronRightCircle className="h-5 w-5" />
+              <ChevronRightCircle className="h-6 w-6" />
             </Button>
           </div>
         </form>
